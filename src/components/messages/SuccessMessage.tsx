@@ -6,7 +6,7 @@ interface SucccessMessageProps {
 
 const SuccessMessage = ({ message }: SucccessMessageProps) => {
   return (
-    <div className='bg-green-600 flex justify-start items-center gap-4 p-2 rounded-md text-[#efefef] w-full my-2'>
+    <div className='bg-green-600 flex justify-start items-center gap-4 p-2 rounded-md text-[#efefef] my-2'>
       <GrFormCheckmark size={30}/>
       <span>{message}</span>
     </div>

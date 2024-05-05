@@ -6,7 +6,7 @@ interface ErrorMessageProps {
 
 const ErrorMessage = ({ message }: ErrorMessageProps) => {
   return (
-    <div className='bg-red-600 flex justify-start items-center gap-4 p-2 rounded-md text-[#efefef] w-full my-2'>
+    <div className='bg-red-600 flex justify-start items-center gap-4 p-2 rounded-md text-[#efefef] my-2'>
       <TbAlertOctagon size={30}/>
       <span>{message}</span>
     </div>
