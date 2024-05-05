@@ -28,7 +28,7 @@ function Graph() {
             curvature: i * 0.3, 
             rotation: 0
           })
-          if (neighbours[i].type === EdgeType.NOT_DIRECTED) {
+          if (neighbours[i].type === EdgeType.NOT_ORIENTED) {
             transformedEdges.push({
               source: neighbours[i].destination.id, 
               target: neighbours[i].source.id, 

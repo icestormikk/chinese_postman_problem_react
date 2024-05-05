@@ -40,6 +40,9 @@
   input[type="file"] {
     @apply hidden
   }
+  input[type="number"] {
+    @apply w-fit ml-2
+  }
   select {
     @apply text-base p-1 w-fit
   }
@@ -55,6 +58,9 @@
   }
   .modal::backdrop {
     background: rgba(0, 0, 0, 0.5);
+  }
+  .settings-panel-button {
+    @apply bg-green-500 rounded-md h-10 aspect-square flex justify-center items-center text-white cursor-pointer
   }
 }
 

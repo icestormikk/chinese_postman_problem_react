@@ -1,3 +1,5 @@
+import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
+import { Graph } from '@/types/graph/Graph'
 import { ipcRenderer, contextBridge } from 'electron'
 
 contextBridge.exposeInMainWorld('ipcRenderer', {
@@ -25,6 +27,15 @@ contextBridge.exposeInMainWorld('electron', {
   },
   isFileExists: async (filepath: string) => {
     return ipcRenderer.invoke('isFileExists', filepath)
+  },
+  launchGeneticAlgorithm: async (
+    logFilePath: string, 
+    jarFilePath: string, 
+    resultsFilePath: string,
+    configuration: GeneticAlgorithmProps, 
+    graph: Graph<number>
+  ) => {
+    return await ipcRenderer.invoke('launchGeneticAlgorithm', logFilePath, jarFilePath, resultsFilePath, configuration, graph)
   }
 })
 

@@ -9,11 +9,11 @@ const CorrectStructure = () => {
     () => {
       const nodes = [...Array(3).keys()].map((num) => new Node(`Node-${num}`))
       const edges = [
-        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_DIRECTED),
-        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_DIRECTED),
-        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_DIRECTED),
-        new Edge(nodes[1], nodes[2], 100, EdgeType.NOT_DIRECTED),
-        new Edge(nodes[2], nodes[0], 100, EdgeType.ORIENTED)
+        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_ORIENTED),
+        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_ORIENTED),
+        new Edge(nodes[0], nodes[1], 100, EdgeType.NOT_ORIENTED),
+        new Edge(nodes[1], nodes[2], 100, EdgeType.NOT_ORIENTED),
+        new Edge(nodes[2], nodes[0], 100, EdgeType.DIRECTED)
       ]
       const graph = new Graph(nodes, edges)
 

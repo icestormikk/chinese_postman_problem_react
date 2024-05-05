@@ -1,4 +1,4 @@
 export enum EdgeType {
-  ORIENTED = 'Ориентированное', 
-  NOT_DIRECTED = 'Не ориентированное'
+  DIRECTED = 'DIRECTED', 
+  NOT_ORIENTED = 'NOT_ORIENTED'
 }

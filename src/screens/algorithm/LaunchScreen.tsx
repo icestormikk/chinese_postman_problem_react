@@ -1,60 +1,61 @@
-import ErrorMessage from '@/components/ErrorMessage';
-import SuccessMessage from '@/components/SuccessMessage';
+import React from 'react';
+import ErrorMessage from '@/components/messages/ErrorMessage';
 import { useAppSelector } from '@/libs/redux/hooks';
 import { AlgorithmTypes, getTranslatedType } from '@/types/enums/AlgorithmTypes';
-import React from 'react';
 import AlgorithmParameter from './AlgorithmParameter';
-import { VscDebugStart } from 'react-icons/vsc';
-import { VscLoading } from "react-icons/vsc";
+import LaunchGenetic from './LaunchGenetic';
 
 
 function LaunchScreen() {
-  const { executableFilePath } = useAppSelector((state) => state.main)
-  const [isWorking, setIsWorking] = React.useState(false)
+  const { executableFilePath, logFilePath, resultsFilePath } = useAppSelector((state) => state.main)
+  const nodes = useAppSelector((state) => state.graph.nodes)
+  const [errors, setErrors] = React.useState<string[]>([])
+  const [selectedType, setSelectedType] = React.useState<AlgorithmTypes>()
 
-  const onLaunch = React.useCallback(
-    async () => {
+  React.useEffect(
+    () => {
+      setErrors([])
       if (!executableFilePath) {
-        return
+        setErrors((prevValue) => [...prevValue, "Не установлен путь до исполнительного файла с алгоритмами. Перейдите во вкладку \"Конфигурация\" на правой панели приложения"])
       }
-
-      setIsWorking(true)
-      setTimeout(
-        () => {
-          setIsWorking(false)
-        },
-        5000
-      )
+      if(!logFilePath) {
+        setErrors((prevValue) => [...prevValue, "Не установлен путь до файла для логов приложения. Перейдите во вкладку \"Конфигурация\" на правой панели приложения"])
+      }
+      if (!resultsFilePath) {
+        setErrors((prevValue) => [...prevValue, "Не установлен путь до файла для вывода результатов. Перейдите во вкладку \"Конфигурация\" на правой панели приложения"])
+      }
+      if (nodes.length === 0) {
+        setErrors((prevValue) => [...prevValue, "Граф должен содержать как минимум одну вершину"])
+      }
     },
-    []
+    [executableFilePath, nodes]
   )
 
   return (
     <div className='space-y-4'>
       {
-        executableFilePath ? (
-          <SuccessMessage message={`Путь до исполняемого файла установлен. Текущий путь: ${executableFilePath}`}/>
+        errors.length > 0 ? (
+          errors.map((error, index) => (
+            <ErrorMessage key={index} message={error}/>
+          ))
         ) : (
-          <ErrorMessage message='Не установлен путь до исполнительного файла с алгоритмами. Перейдите во вкладку "Конфигурация" на правой панели приложения'/>
+          <>
+            <AlgorithmParameter title='Выберите тип алгоритма, по которому будет вычислено приблизительное решение:'>
+              <select name="algorithm-type" id="algorithm-type" onChange={(event) => setSelectedType(AlgorithmTypes[event.target.value as keyof typeof AlgorithmTypes])}>
+                <option value="">Не выбрано</option>
+                {
+                  Object.entries(AlgorithmTypes).map(([key, value], index) => (
+                    <option key={index} value={key}>{getTranslatedType(value)}</option>
+                  ))
+                }
+              </select>
+            </AlgorithmParameter>
+            {
+              selectedType === AlgorithmTypes.GENETIC && <LaunchGenetic/>
+            }
+          </>
         )
       }
-      <AlgorithmParameter title='Выберите тип алгоритма, по которому будет вычислено приблизительное решение:'>
-        <select name="algorithm-type" id="algorithm-type" onChange={(event) => console.log(event.target.value) }>
-          {
-            Object.entries(AlgorithmTypes).map(([key, value], index) => (
-              <option key={index} value={key}>{getTranslatedType(value)}</option>
-            ))
-          }
-        </select>
-      </AlgorithmParameter>
-      <button 
-        className={`text-white ${executableFilePath ? 'bg-green-500' : 'bg-red-500'}`} 
-        onClick={onLaunch}
-        disabled={!executableFilePath || isWorking}
-      >
-        {isWorking ? 'Вычисляем...' : 'Запустить'}
-        {isWorking ? <VscLoading size={20} className='animate-spin'/> : <VscDebugStart size={20}/>}
-      </button>
     </div>
   );
 }

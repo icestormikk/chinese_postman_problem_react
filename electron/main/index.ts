@@ -3,7 +3,10 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 import { update } from './update'
-import { readFileSync, existsSync } from 'fs'
+import { readFileSync, existsSync, writeFileSync, watchFile } from 'fs'
+import { execSync } from 'child_process'
+import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
+import { Graph } from '@/types/graph/Graph'
 
 globalThis.__filename = fileURLToPath(import.meta.url)
 globalThis.__dirname = path.dirname(__filename)
@@ -123,3 +126,53 @@ ipcMain.handle('isFileExists', async (_: any, filepath: string) => {
 
   return existsSync(filepath)
 })
+ipcMain.handle('launchGeneticAlgorithm', async (
+  _: any, 
+  logFilePath: string,
+  jarFilePath: string, 
+  resultsFilePath: string,
+  configuration: GeneticAlgorithmProps,
+  graph: Graph<number>
+) => {
+  const config = {
+    type: 'GENETIC',
+    genetic: {
+      iterationsCount: configuration.iterationsCount,
+      populationSize: configuration.populationSize,
+      startNodeId: configuration.startNodeId,
+      parents: {
+        selection: configuration.parentsSelectionMethod,
+        chooser: configuration.parentsChooserMethod
+      },
+      recombinationType: configuration.recombinationType,
+      mutation: {
+        type: configuration.mutationType,
+        rate: configuration.mutationRate
+      },
+      newPopulation: {
+        type: configuration.newPopulationSelectionMethod,
+        rate: configuration.newPopulationRate
+      }
+    }
+  }
+
+  const graphOutputFilepath = getGraphOutputFilepath()
+  writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
+
+  const configurationFilepath = getConfigurationOutputFilepath()
+  writeFileSync(configurationFilepath, JSON.stringify(config, null, 2), { flag: 'w+' })
+
+  execSync(
+    `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`, 
+  )
+})
+
+function getGraphOutputFilepath(): string {
+  const filename = `data.json`
+  return path.join(os.homedir(), filename)
+}
+
+function getConfigurationOutputFilepath(): string {
+  const filename = `config.json`
+  return path.join(os.homedir(), filename)
+}

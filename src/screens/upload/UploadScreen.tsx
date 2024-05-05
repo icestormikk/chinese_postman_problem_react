@@ -8,7 +8,7 @@ import UploadStepComponent from './UploadStepComponent';
 import Modal from '@/components/Modal';
 import CorrectStructure from './CorrectStructure';
 import { Graph } from '@/types/graph/Graph';
-import ErrorMessage from '@/components/ErrorMessage';
+import ErrorMessage from '@/components/messages/ErrorMessage';
 import ResultReport from './ResultReport';
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { setEdges, setNodes } from '@/libs/redux/slices/graphSlice';
