@@ -5,6 +5,7 @@ import { AlgorithmTypes, getTranslatedType } from '@/types/enums/AlgorithmTypes'
 import AlgorithmParameter from './AlgorithmParameter';
 import LaunchGenetic from './LaunchGenetic';
 import SuccessMessage from '@/components/messages/SuccessMessage';
+import AlgorithmFailedBlock from './AlgorithmFailedBlock';
 
 
 function LaunchScreen() {
@@ -58,7 +59,7 @@ function LaunchScreen() {
               response?.code === "SUCCESS" && <SuccessMessage message={response.data.message}/>
             }
             {
-              response?.code === "FAILED" && <ErrorMessage message={response.data.message}/>
+              response?.code === "FAILED" && <AlgorithmFailedBlock/>
             }
           </>
         )
