@@ -4,10 +4,11 @@ import { useAppSelector } from '@/libs/redux/hooks';
 import { AlgorithmTypes, getTranslatedType } from '@/types/enums/AlgorithmTypes';
 import AlgorithmParameter from './AlgorithmParameter';
 import LaunchGenetic from './LaunchGenetic';
+import SuccessMessage from '@/components/messages/SuccessMessage';
 
 
 function LaunchScreen() {
-  const { executableFilePath, logFilePath, resultsFilePath } = useAppSelector((state) => state.main)
+  const { executableFilePath, logFilePath, resultsFilePath, response } = useAppSelector((state) => state.main)
   const nodes = useAppSelector((state) => state.graph.nodes)
   const [errors, setErrors] = React.useState<string[]>([])
   const [selectedType, setSelectedType] = React.useState<AlgorithmTypes>()
@@ -52,6 +53,12 @@ function LaunchScreen() {
             </AlgorithmParameter>
             {
               selectedType === AlgorithmTypes.GENETIC && <LaunchGenetic/>
+            }
+            {
+              response?.code === "SUCCESS" && <SuccessMessage message={response.data.message}/>
+            }
+            {
+              response?.code === "FAILED" && <ErrorMessage message={response.data.message}/>
             }
           </>
         )
