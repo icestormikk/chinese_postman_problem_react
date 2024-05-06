@@ -5,15 +5,18 @@ import { FaCircleNodes } from "react-icons/fa6";
 import { SlGraph, SlSettings } from "react-icons/sl";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
+import { TbReport } from "react-icons/tb";
 import Modal from "../Modal";
 import SettingsScreen from "@/screens/settings/SettingsScreen";
 import UploadScreen from "@/screens/upload/UploadScreen";
 import NodesScreen from "@/screens/nodes/NodesScreen";
 import EdgesScreen from "@/screens/edges/EdgesScreen";
 import LaunchScreen from "@/screens/algorithm/LaunchScreen";
+import { useAppSelector } from "@/libs/redux/hooks";
 
 
 function Sidebar() {
+  const { response } = useAppSelector((state) => state.main)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false)
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false)
   const [isNodesModalOpen, setIsNodesModalOpen] = React.useState(false)
@@ -26,17 +29,18 @@ function Sidebar() {
         {title: 'Список рёбер', icon: <SlGraph size={20}/>, onClick: () => { setIsEdgesModalOpen(true) }},
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
         {title: 'Загрузить граф из файла', icon: <MdOutlineFileUpload size={20}/>, onClick: () => { setIsUploadModalOpen(true) }},
-        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => { setIsAlgorithmModalOpen(true) } }
+        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => { setIsAlgorithmModalOpen(true) } },
+        {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { console.log('Heee') } },
       ]
     },
-    []
+    [response?.data.result]
   )
 
   return (
     <aside className="h-dvh w-14 text-black flex flex-col bg-gray-300 fixed right-0 top-0">
       {
         buttons.map((button, index) => (
-          <SidebarButton key={index} title={button.title || ''} onClick={button.onClick}>
+          <SidebarButton key={index} title={button.title || ''} onClick={button.onClick} isDisabled={button.isDisabled}>
              {button.icon}
           </SidebarButton>
         ))
