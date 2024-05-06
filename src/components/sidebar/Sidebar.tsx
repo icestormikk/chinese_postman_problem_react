@@ -5,7 +5,7 @@ import { FaCircleNodes } from "react-icons/fa6";
 import { SlGraph, SlSettings } from "react-icons/sl";
 import { MdOutlineFileUpload } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
-import Modal from "./Modal";
+import Modal from "../Modal";
 import SettingsScreen from "@/screens/settings/SettingsScreen";
 import UploadScreen from "@/screens/upload/UploadScreen";
 import NodesScreen from "@/screens/nodes/NodesScreen";

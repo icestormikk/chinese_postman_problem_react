@@ -1,5 +1,5 @@
 import Graph from './components/Graph'
-import Sidebar from './components/Sidebar'
+import Sidebar from './components/sidebar/Sidebar'
 
 function App() {
   return (
