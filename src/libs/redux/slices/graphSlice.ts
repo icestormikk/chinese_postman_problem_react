@@ -20,12 +20,22 @@ const graphSlice = createSlice({
       const nodes = action.payload
       state.nodes = nodes
     },
+    removeNodeById: (state, action: PayloadAction<string>) => {
+      const id = action.payload
+
+      state.nodes = state.nodes.filter((n) => n.id !== id)
+      state.edges = state.edges.filter((e) => e.source.id !== id && e.destination.id !== id)
+    },
     setEdges: (state, action: PayloadAction<Edge<number>[]>) => {
       const edges = action.payload
       state.edges = edges
     },
+    removeEdgeById: (state, action: PayloadAction<string>) => {
+      const id = action.payload
+      state.edges = state.edges.filter((e) => e.id !== id)
+    }
   }
 })
 
-export const { setNodes, setEdges } = graphSlice.actions
+export const { setNodes, removeNodeById, setEdges, removeEdgeById } = graphSlice.actions
 export default graphSlice.reducer
