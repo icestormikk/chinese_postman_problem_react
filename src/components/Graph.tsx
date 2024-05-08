@@ -1,15 +1,33 @@
-import { useAppSelector } from '@/libs/redux/hooks';
+import { useAppDispatch, useAppSelector } from '@/libs/redux/hooks';
+import { selectNodeById } from '@/libs/redux/slices/graphSlice';
 import { EdgeType } from '@/types/graph/EdgeType';
+import { Node } from '@/types/graph/Node';
 import React from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 import SpriteText from 'three-spritetext';
 
 function Graph() {
-  const { edges, nodes } = useAppSelector((state) => state.graph)
+  const dispatch = useAppDispatch()
+  const { edges, nodes, selectedNodes } = useAppSelector((state) => state.graph)
   const [graphNodes, setGraphNodes] = React.useState<any[]>([])
   const [graphEdges, setGraphEdges] = React.useState<any[]>([])
   const [graphWidth, setGraphWidth] = React.useState(window.innerWidth)
   const [graphHeight, setGraphHeight] = React.useState(window.innerHeight)
+
+  const onNodeClick = React.useCallback(
+    (node: Node) => {
+      dispatch(selectNodeById(node.id)) 
+      console.log(selectedNodes)
+    },
+    []
+  )
+
+  React.useEffect(
+    () => {
+      console.log(selectedNodes)
+    },
+    [selectedNodes]
+  )
 
   React.useEffect(
     () => {
@@ -56,12 +74,14 @@ function Graph() {
           nodes: graphNodes,
           links: graphEdges,
         }}
+        nodeColor={(node: Node) => selectedNodes.includes(node.id) ? 'red' : 'yellow'}
         nodeThreeObject={(node) => {
           const sprite = new SpriteText(node.label);
           sprite.color = 'white';
           sprite.textHeight = 1;
           return sprite;
         }}
+        onNodeClick={onNodeClick}
         nodeThreeObjectExtend={true}
         linkCurvature="curvature"
         linkCurveRotation="rotation"
