@@ -5,11 +5,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 interface GraphState {
   nodes: Node[]
   edges: Edge<number>[]
+  selectedNodes: string[]
 }
 
 const initialState: GraphState = {
   nodes: [],
-  edges: []
+  edges: [],
+  selectedNodes: []
 }
 
 const graphSlice = createSlice({
@@ -33,9 +35,22 @@ const graphSlice = createSlice({
     removeEdgeById: (state, action: PayloadAction<string>) => {
       const id = action.payload
       state.edges = state.edges.filter((e) => e.id !== id)
+    },
+    selectNodeById: (state, action: PayloadAction<string>) => {
+      const newSelectedNodeId = action.payload
+
+      const selectedNode = state.nodes.find((n) => n.id === newSelectedNodeId)
+      if (!selectedNode) return
+
+      if (state.selectedNodes.length >= 2) {
+        state.selectedNodes = [selectedNode.id]
+      } else {
+        if (state.selectedNodes.includes(selectedNode.id)) return
+        state.selectedNodes.push(selectedNode.id)
+      }
     }
   }
 })
 
-export const { setNodes, removeNodeById, setEdges, removeEdgeById } = graphSlice.actions
+export const { setNodes, removeNodeById, setEdges, removeEdgeById, selectNodeById } = graphSlice.actions
 export default graphSlice.reducer
