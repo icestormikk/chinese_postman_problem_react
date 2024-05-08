@@ -11,7 +11,6 @@ import { GeneticAlgorithmFormProps, GeneticAlgorithmProps } from '@/types/alogri
 import { VscDebugStart, VscLoading } from 'react-icons/vsc';
 import { Graph } from '@/types/graph/Graph';
 import { setResponse } from '@/libs/redux/slices/mainSlice';
-import { ProgramResponse } from '@/types/ProgramResponse';
 
 function LaunchGenetic() {
   const dispatch = useAppDispatch()
@@ -49,7 +48,6 @@ function LaunchGenetic() {
         )
         .then(async () => {
           const dateEnd = new Date()
-          console.log(dateEnd.getTime() - dateStart.getTime())
           setIsWorking(false)
           const content = await window.electron.readFile(resultsFilePath)
           const result = content as unknown as Array<string>
@@ -58,18 +56,21 @@ function LaunchGenetic() {
               code: "SUCCESS",
               data: {
                 message: "Алгоритм завершил свою работу успешно",
+                durationInMs: dateEnd.getTime() - dateStart.getTime(),
                 result
               }
             })
           )
         })
         .catch((err) => {
+          const dateEnd = new Date()
           setIsWorking(false)
           dispatch(
             setResponse({
               code: "FAILED",
               data: {
                 message: err.message,
+                durationInMs: dateEnd.getTime() - dateStart.getTime(),
                 possibleSolution: 'Проверьте правильность заполнения полей в конфигурации'
               }
             })
