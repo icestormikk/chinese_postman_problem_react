@@ -29,11 +29,11 @@ function Sidebar() {
         {title: 'Список рёбер', icon: <SlGraph size={20}/>, onClick: () => { setIsEdgesModalOpen(true) }},
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
         {title: 'Загрузить граф из файла', icon: <MdOutlineFileUpload size={20}/>, onClick: () => { setIsUploadModalOpen(true) }},
-        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => { setIsAlgorithmModalOpen(true) } },
+        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => {  setIsAlgorithmModalOpen((prevState) => !prevState) } },
         {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { console.log('Heee') } },
       ]
     },
-    [response?.data.result]
+    [response?.data.result, setIsSettingsModalOpen, setIsUploadModalOpen, setIsNodesModalOpen, setIsEdgesModalOpen, setIsAlgorithmModalOpen]
   )
 
   return (
