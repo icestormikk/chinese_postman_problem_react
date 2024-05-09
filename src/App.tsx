@@ -5,14 +5,12 @@ import Sidebar from './components/sidebar/Sidebar'
 import { useAppSelector } from './libs/redux/hooks'
 
 function App() {
-  const { selectedNodes } = useAppSelector((state) => state.graph)
   const isBottomBarVisible = React.useMemo(
     () => {
-      if (selectedNodes.length === 2) return true
-
+      // TODO
       return false
     },
-    [selectedNodes]
+    []
   )
 
   return (
