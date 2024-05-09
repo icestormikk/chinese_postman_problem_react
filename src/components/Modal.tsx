@@ -9,14 +9,12 @@ interface ModalProps {
 };
 
 function  Modal({ isOpen, title, hasCloseBtn, onClose, children }: React.PropsWithChildren<ModalProps>) {
-  const [isModalOpen, setModalOpen] = React.useState(isOpen);
   const modalRef = React.useRef<HTMLDialogElement | null>(null)
 
   const handleCloseModal = () => {
     if (onClose) {
       onClose();
     }
-    setModalOpen(false);
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDialogElement>) => {
@@ -28,13 +26,13 @@ function  Modal({ isOpen, title, hasCloseBtn, onClose, children }: React.PropsWi
   React.useEffect(() => {
     const modalElement = modalRef.current;
     if (modalElement) {
-      if (isModalOpen) {
+      if (isOpen) {
         modalElement.showModal();
       } else {
         modalElement.close();
       }
     }
-  }, [isModalOpen]);
+  }, [isOpen]);
 
   return (
     <dialog ref={modalRef} onKeyDown={handleKeyDown} className='modal'>
