@@ -1,5 +1,3 @@
-import React from 'react';
-
 interface CustomSelectProps {
   id: string
   hasNotSelectedOption?: boolean
