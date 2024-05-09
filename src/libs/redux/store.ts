@@ -7,6 +7,11 @@ export const store = configureStore({
     main: mainSlice,
     graph: graphSlice
   },
+  middleware(getDefaultMiddleware) {
+    return getDefaultMiddleware({
+      serializableCheck: false
+    })
+  },
 })
 
 export type RootState = ReturnType<typeof store.getState>
