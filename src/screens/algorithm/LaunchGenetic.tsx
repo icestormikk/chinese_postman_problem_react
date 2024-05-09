@@ -4,8 +4,8 @@ import { getTranslatedParentsChooserType, ParentsChooserTypes } from '@/types/en
 import { getTranslatedParentsSelectionType, ParentsSelectionType } from '@/types/enums/ParentsSelectionTypes';
 import { getTranslatedRecombinationType, RecombinationTypes } from '@/types/enums/RecombinationTypes';
 import React from 'react';
-import CustomSelect from './CustomSelect';
-import CustomFormField from './CustomFormField';
+import CustomSelect from '../../components/CustomSelect';
+import CustomFormField from '../../components/CustomFormField';
 import { getNewPopulationSelectionType, NewPopulationSelectionTypes } from '@/types/enums/NewPopulationSelectionTypes';
 import { GeneticAlgorithmFormProps, GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps';
 import { VscDebugStart, VscLoading } from 'react-icons/vsc';
