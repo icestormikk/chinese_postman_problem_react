@@ -1,6 +1,7 @@
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { removeEdgeById } from '@/libs/redux/slices/graphSlice';
 import { Edge } from '@/types/graph/Edge';
+import { getTranslatedEdgeType } from '@/types/graph/EdgeType';
 import React from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 
@@ -22,7 +23,7 @@ const EdgeShort = ({ edge }: EdgeShortProps) => {
       <div className='flex flex-col gap-2'>
         <span><b>{edge.source.label}</b> - <b>{edge.destination.label}</b></span>
         <span className='text-sm'>Вес ребра: <b>{edge.weight}</b></span>
-        <span className='text-sm'>Тип ребра: <b>{edge.type}</b></span>
+        <span className='text-sm'>Тип ребра: <b>{getTranslatedEdgeType(edge.type)}</b></span>
         <span className='text-xs text-gray-400'>{edge.id}</span>
       </div>
       <button className='bg-transparent' onClick={() => onEdgeRemove()}>
