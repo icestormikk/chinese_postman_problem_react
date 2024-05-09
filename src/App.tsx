@@ -1,11 +1,25 @@
+import React from 'react'
+import BottomBar from './components/bottombar/BottomBar'
 import Graph from './components/Graph'
 import Sidebar from './components/sidebar/Sidebar'
+import { useAppSelector } from './libs/redux/hooks'
 
 function App() {
+  const { selectedNodes } = useAppSelector((state) => state.graph)
+  const isBottomBarVisible = React.useMemo(
+    () => {
+      if (selectedNodes.length === 2) return true
+
+      return false
+    },
+    [selectedNodes]
+  )
+
   return (
     <div className='w-full h-full flex flex-row'>
       <Graph/>
       <Sidebar/>
+      <BottomBar isVisible={isBottomBarVisible}/>
     </div>
   )
 }
