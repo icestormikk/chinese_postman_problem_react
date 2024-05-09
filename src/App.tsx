@@ -14,7 +14,7 @@ function App() {
   )
 
   return (
-    <div className='w-full h-full flex flex-row'>
+    <div className='w-full h-full flex flex-row overflow-hidden'>
       <Graph/>
       <Sidebar/>
       <BottomBar isVisible={isBottomBarVisible}/>
