@@ -51,7 +51,7 @@ function AddNodeScreen() {
   )
 
   return (
-    <form onSubmit={(event) => onNodeCreate(event)} >
+    <form onSubmit={(event) => onNodeCreate(event)} className='space-y-2'>
       <CustomFormField id={'nodeLabel'} title={'Название вершины'}>
         <input type="text" name="nodeLabel" id="nodeLabel" required/>
       </CustomFormField>
