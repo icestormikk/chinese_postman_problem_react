@@ -22,8 +22,14 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 })
 
 contextBridge.exposeInMainWorld('electron', {
+  getAppDirectory: () => {
+    return ipcRenderer.invoke('getAppDirectory')
+  },
   readFile: async (filepath: string) => {
     return ipcRenderer.invoke('readFile', filepath)
+  },
+  writeToFile: async (filepath: string, content: string) => {
+    return ipcRenderer.invoke('writeToFile', filepath, content)
   },
   isFileExists: async (filepath: string) => {
     return ipcRenderer.invoke('isFileExists', filepath)
