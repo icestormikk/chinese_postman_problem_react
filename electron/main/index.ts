@@ -3,7 +3,7 @@ import { fileURLToPath } from 'node:url'
 import path from 'node:path'
 import os from 'node:os'
 import { update } from './update'
-import { readFileSync, existsSync, writeFileSync, watchFile } from 'fs'
+import { readFileSync, existsSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
 import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
 import { Graph } from '@/types/graph/Graph'
@@ -106,6 +106,10 @@ ipcMain.handle('open-win', (_, arg) => {
   }
 })
 
+
+ipcMain.handle('getAppDirectory', (_: any) => {
+  return app.getAppPath()
+})
 ipcMain.handle('readFile', async (_: any, filepath: string): Promise<string> => {
   if (!filepath) {
     throw new Error('The path to the file to be read should not be empty or null')
@@ -125,6 +129,18 @@ ipcMain.handle('isFileExists', async (_: any, filepath: string) => {
   }
 
   return existsSync(filepath)
+})
+ipcMain.handle('writeToFile', async (_: any, filepath: string, content: string) => {
+  if (!filepath) {
+    throw new Error('The path to the file for writing should not be empty')
+  }
+
+  try {
+    writeFileSync(filepath, content)
+  } catch (e: any) {
+    console.error(`Error while writing to a file (${e.message})`)
+    throw e
+  }
 })
 ipcMain.handle('launchGeneticAlgorithm', async (
   _: any, 
