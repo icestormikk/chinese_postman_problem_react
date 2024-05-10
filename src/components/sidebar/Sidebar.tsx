@@ -3,7 +3,7 @@ import { SidebarButtonProps } from "@/types/SidebarButtonProps";
 import SidebarButton from "./SidebarButton";
 import { FaCircleNodes } from "react-icons/fa6";
 import { SlGraph, SlSettings } from "react-icons/sl";
-import { MdFileDownload, MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineFileDownload, MdOutlineFileUpload } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
 import { TbReport } from "react-icons/tb";
 import Modal from "../Modal";
@@ -31,7 +31,7 @@ function Sidebar() {
         {title: 'Список рёбер', icon: <SlGraph size={20}/>, onClick: () => { setIsEdgesModalOpen(true) }},
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
         {title: 'Загрузить граф из файла', icon: <MdOutlineFileUpload size={20}/>, onClick: () => { setIsUploadModalOpen(true) }},
-        {title: 'Выгрузить граф в файл', icon: <MdFileDownload size={20}/>, onClick: () => { setIsDownloadModalOpen(true) }},
+        {title: 'Выгрузить граф в файл', icon: <MdOutlineFileDownload size={20}/>, onClick: () => { setIsDownloadModalOpen(true) }},
         {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => {  setIsAlgorithmModalOpen((prevState) => !prevState) } },
         {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { console.log('Heee') } },
       ]
