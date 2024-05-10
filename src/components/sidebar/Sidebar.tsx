@@ -3,7 +3,7 @@ import { SidebarButtonProps } from "@/types/SidebarButtonProps";
 import SidebarButton from "./SidebarButton";
 import { FaCircleNodes } from "react-icons/fa6";
 import { SlGraph, SlSettings } from "react-icons/sl";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { MdFileDownload, MdOutlineFileUpload } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
 import { TbReport } from "react-icons/tb";
 import Modal from "../Modal";
@@ -13,12 +13,14 @@ import NodesScreen from "@/screens/nodes/NodesScreen";
 import EdgesScreen from "@/screens/edges/EdgesScreen";
 import LaunchScreen from "@/screens/algorithm/LaunchScreen";
 import { useAppSelector } from "@/libs/redux/hooks";
+import DownloadScreen from "@/screens/download/DownloadScreen";
 
 
 function Sidebar() {
   const { response } = useAppSelector((state) => state.main)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false)
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false)
+  const [isDownloadModalOpen, setIsDownloadModalOpen] = React.useState(false)
   const [isNodesModalOpen, setIsNodesModalOpen] = React.useState(false)
   const [isEdgesModalOpen, setIsEdgesModalOpen] = React.useState(false)
   const [isAlgorithmModalOpen, setIsAlgorithmModalOpen] = React.useState(false)
@@ -29,6 +31,7 @@ function Sidebar() {
         {title: 'Список рёбер', icon: <SlGraph size={20}/>, onClick: () => { setIsEdgesModalOpen(true) }},
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
         {title: 'Загрузить граф из файла', icon: <MdOutlineFileUpload size={20}/>, onClick: () => { setIsUploadModalOpen(true) }},
+        {title: 'Выгрузить граф в файл', icon: <MdFileDownload size={20}/>, onClick: () => { setIsDownloadModalOpen(true) }},
         {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => {  setIsAlgorithmModalOpen((prevState) => !prevState) } },
         {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { console.log('Heee') } },
       ]
@@ -66,6 +69,18 @@ function Sidebar() {
             onClose={() => setIsUploadModalOpen(false)}
           >
             <UploadScreen onScreenClose={() => setIsUploadModalOpen(false)}/>
+          </Modal>
+        )
+      }
+      {
+        isDownloadModalOpen && (
+          <Modal 
+            isOpen={isDownloadModalOpen} 
+            title="Выгрузка графа в файл" 
+            hasCloseBtn={true} 
+            onClose={() => setIsDownloadModalOpen(false)}
+          >
+            <DownloadScreen/>
           </Modal>
         )
       }
