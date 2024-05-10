@@ -4,7 +4,9 @@ import { GeneticAlgorithmProps } from "./types/alogrithms/GeneticAlgorithmProps"
 import { Graph } from "./types/graph/Graph";
 
 export interface IElectronAPI {
-  readFile: (filepath: string) => Promise<string> 
+  getAppDirectory: () => Promise<string>
+  readFile: (filepath: string) => Promise<string>
+  writeToFile: (filepath: string, content: string) => Promise<void>
   watchFile: (filepath: string, onUpdate: () => void) => Promise<void>
   isFileExists: (filepath: string) => Promise<boolean>
   launchGeneticAlgorithm: (
