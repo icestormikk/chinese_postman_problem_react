@@ -1,14 +1,24 @@
-export type GeneticAlgorithmProps = {
-  iterationsCount: number
-  populationSize: number
-  startNodeId: string
-  parentsSelectionMethod: string
-  parentsChooserMethod: string
-  recombinationType: string
-  mutationType: string
-  mutationRate: number
-  newPopulationSelectionMethod: string
-  newPopulationRate: number
+import { AlgorithmProps } from "./AlgorithmProps"
+
+export type GeneticAlgorithmProps = AlgorithmProps & {
+  genetic: {
+    iterationsCount: number
+    populationSize: number
+    startNodeId: string
+    parents: {
+      selection: string
+      chooser: string
+    }
+    recombinationType: string
+    mutation: {
+      type: string
+      rate: number
+    }
+    newPopulation: {
+      type: string
+      rate: number
+    }
+  }
 }
 
 export type GeneticAlgorithmFormProps = {
