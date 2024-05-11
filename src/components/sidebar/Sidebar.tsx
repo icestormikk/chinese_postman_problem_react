@@ -14,6 +14,7 @@ import EdgesScreen from "@/screens/edges/EdgesScreen";
 import LaunchScreen from "@/screens/algorithm/LaunchScreen";
 import { useAppSelector } from "@/libs/redux/hooks";
 import DownloadScreen from "@/screens/download/DownloadScreen";
+import ResultScreen from "@/screens/result/ResultScreen";
 
 
 function Sidebar() {
@@ -24,6 +25,7 @@ function Sidebar() {
   const [isNodesModalOpen, setIsNodesModalOpen] = React.useState(false)
   const [isEdgesModalOpen, setIsEdgesModalOpen] = React.useState(false)
   const [isAlgorithmModalOpen, setIsAlgorithmModalOpen] = React.useState(false)
+  const [isResultModalOpen, setIsResultModalOpen] = React.useState(false)
   const buttons = React.useMemo<SidebarButtonProps[]>(
     () => {
       return [
@@ -32,8 +34,8 @@ function Sidebar() {
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
         {title: 'Загрузить граф из файла', icon: <MdOutlineFileUpload size={20}/>, onClick: () => { setIsUploadModalOpen(true) }},
         {title: 'Выгрузить граф в файл', icon: <MdOutlineFileDownload size={20}/>, onClick: () => { setIsDownloadModalOpen(true) }},
-        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => {  setIsAlgorithmModalOpen((prevState) => !prevState) } },
-        {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { console.log('Heee') } },
+        {title: 'Запуск алгоритма',  icon: <VscDebugStart size={20}/>, onClick: () => { setIsAlgorithmModalOpen((prevState) => !prevState) } },
+        {title: 'Просмотр результата', isDisabled: response?.data.result === undefined, icon: <TbReport size={20}/>, onClick: () => { setIsResultModalOpen(true) } },
       ]
     },
     [response?.data.result, setIsSettingsModalOpen, setIsUploadModalOpen, setIsNodesModalOpen, setIsEdgesModalOpen, setIsAlgorithmModalOpen]
@@ -117,6 +119,18 @@ function Sidebar() {
             onClose={() => setIsAlgorithmModalOpen(false)}
           >
             <LaunchScreen/>
+          </Modal>
+        )
+      }
+      {
+        isResultModalOpen && (
+          <Modal 
+            isOpen={isResultModalOpen} 
+            title="Результат работы алгоритма" 
+            hasCloseBtn={true} 
+            onClose={() => setIsResultModalOpen(false)}
+          >
+            <ResultScreen/>
           </Modal>
         )
       }
