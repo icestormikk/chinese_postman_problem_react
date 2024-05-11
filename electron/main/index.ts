@@ -150,33 +150,11 @@ ipcMain.handle('launchGeneticAlgorithm', async (
   configuration: GeneticAlgorithmProps,
   graph: Graph<number>
 ) => {
-  const config = {
-    type: 'GENETIC',
-    genetic: {
-      iterationsCount: configuration.iterationsCount,
-      populationSize: configuration.populationSize,
-      startNodeId: configuration.startNodeId,
-      parents: {
-        selection: configuration.parentsSelectionMethod,
-        chooser: configuration.parentsChooserMethod
-      },
-      recombinationType: configuration.recombinationType,
-      mutation: {
-        type: configuration.mutationType,
-        rate: configuration.mutationRate
-      },
-      newPopulation: {
-        type: configuration.newPopulationSelectionMethod,
-        rate: configuration.newPopulationRate
-      }
-    }
-  }
-
   const graphOutputFilepath = getGraphOutputFilepath()
   writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
 
   const configurationFilepath = getConfigurationOutputFilepath()
-  writeFileSync(configurationFilepath, JSON.stringify(config, null, 2), { flag: 'w+' })
+  writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
 
   execSync(
     `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`, 
