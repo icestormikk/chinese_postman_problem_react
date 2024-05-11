@@ -5,9 +5,9 @@ function SidebarButton({ title, children, onClick, isDisabled = false }: React.P
   return (
     <div 
       className='h-14 aspect-square hover:bg-gray-400/50 bg-transparent flex justify-center items-center font-bold'
-      style={{opacity: isDisabled ? 0.5 : 1.0}}
+      style={{display: isDisabled ? 'none' : 'flex'}}
       onClick={isDisabled ? () => {} : onClick}
-      title={title + " " + (isDisabled ? '(заблокировано)' : '')}
+      title={title}
     >
       {children}
     </div>
