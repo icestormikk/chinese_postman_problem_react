@@ -11,6 +11,8 @@ import { GeneticAlgorithmFormProps, GeneticAlgorithmProps } from '@/types/alogri
 import { VscDebugStart, VscLoading } from 'react-icons/vsc';
 import { Graph } from '@/types/graph/Graph';
 import { setResponse } from '@/libs/redux/slices/mainSlice';
+import { AlgorithmTypes } from '@/types/enums/AlgorithmTypes';
+import { ResultProps } from '@/types/alogrithms/ResultProps';
 
 function LaunchGenetic() {
   const dispatch = useAppDispatch()
@@ -29,48 +31,54 @@ function LaunchGenetic() {
       const target = e.target as typeof e.target & GeneticAlgorithmFormProps
 
       const data: GeneticAlgorithmProps = {
-        iterationsCount: Number(target.iterationsCount.value),
-        populationSize: Number(target.populationSize.value),
-        startNodeId: target.startNodeId.value,
-        parentsSelectionMethod: target.parentsSelectionMethod.value,
-        parentsChooserMethod: target.parentsChooserMethod.value,
-        recombinationType: target.recombinationType.value,
-        mutationType: target.mutationType.value,
-        mutationRate: Number(target.mutationRate.value),
-        newPopulationSelectionMethod: target.newPopulationSelectionMethod.value,
-        newPopulationRate: Number(target.newPopulationRate.value)
+        type: AlgorithmTypes.GENETIC,
+        genetic: {
+          iterationsCount: Number(target.iterationsCount.value),
+          populationSize: Number(target.populationSize.value),
+          startNodeId: target.startNodeId.value,
+          parents: {
+            selection: target.parentsSelectionMethod.value,
+            chooser: target.parentsChooserMethod.value
+          },
+          recombinationType: target.recombinationType.value,
+          mutation: {
+            type: target.mutationType.value,
+            rate: Number(target.mutationRate.value)
+          },
+          newPopulation: {
+            type: target.newPopulationSelectionMethod.value,
+            rate: Number(target.newPopulationRate.value)
+          }
+        }
       }
       
-      const dateStart = new Date()
       window.electron
         .launchGeneticAlgorithm(
           logFilePath, executableFilePath, resultsFilePath, data, new Graph(nodes, edges)
         )
         .then(async () => {
-          const dateEnd = new Date()
           setIsWorking(false)
           const content = await window.electron.readFile(resultsFilePath)
-          const result = content as unknown as Array<string>
+          const result = JSON.parse(content) as ResultProps
           dispatch(
             setResponse({
               code: "SUCCESS",
+              start: { configuration: data },
               data: {
                 message: "Алгоритм завершил свою работу успешно",
-                durationInMs: dateEnd.getTime() - dateStart.getTime(),
                 result
               }
             })
           )
         })
         .catch((err) => {
-          const dateEnd = new Date()
           setIsWorking(false)
           dispatch(
             setResponse({
               code: "FAILED",
+              start: { configuration: data },
               data: {
                 message: err.message,
-                durationInMs: dateEnd.getTime() - dateStart.getTime(),
                 possibleSolution: 'Проверьте правильность заполнения полей в конфигурации'
               }
             })
