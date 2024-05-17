@@ -9,8 +9,8 @@ interface MainState {
 }
 
 const initialState: MainState = {
-  executableFilePath: "C:\\Users\\jigal\\IdeaProjects\\chinese_postman_problem\\build\\libs\\chinese_postman_problem-1.2-SNAPSHOT-standalone.jar",
-  logFilePath: "C:\\Users\\jigal\\chinese-postman-problem-program.log",
+  executableFilePath: undefined,
+  logFilePath: undefined,
   resultsFilePath: undefined,
   response: undefined
 }
