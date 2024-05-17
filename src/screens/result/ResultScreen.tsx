@@ -3,9 +3,10 @@ import Modal from '@/components/Modal';
 import { useAppSelector } from '@/libs/redux/hooks';
 import { Edge } from '@/types/graph/Edge';
 import React from 'react';
-import { AiOutlineClockCircle } from 'react-icons/ai';
 import { ImFileText2 } from 'react-icons/im';
 import { SlSettings } from 'react-icons/sl';
+import PathWidget from './PathWidget';
+import DurationWidget from './DurationWidget';
 
 function ResultScreen() {
   const { logFilePath, response } = useAppSelector((state) => state.main)
@@ -53,9 +54,7 @@ function ResultScreen() {
       {
         errors.map((error, index) => <ErrorMessage key={index} message={error}/>)
       }
-      <div>
-        <PathWidget edges={resultEdges}/>
-      </div>
+      <PathWidget path={resultEdges}/>
       <div className='w-full flex flex-row gap-2'>
         <button className='bg-green-500 text-white' onClick={onLogsOpen}>
           <ImFileText2/>
@@ -92,36 +91,6 @@ function ResultScreen() {
       }
     </div>
   );
-}
-
-interface PathWidgetProps {
-  edges: Array<Edge<number>>
-}
-const PathWidget = ({ edges }: PathWidgetProps) => {
-  return (
-    <ul>
-      {
-        edges.map((edge, index) => (
-          <li key={index}>
-            <p>{edge.id}</p>
-            <b>{`${edge.source.label} -> ${edge.destination.label}`}</b>
-          </li>
-        ))
-      }
-    </ul>
-  );
-};
-
-interface DurationWidgetProps {
-  duration: number
-}
-const DurationWidget = ({ duration }: DurationWidgetProps) => {
-  return (
-    <div className='bg-gray-300 rounded-xl shadow-md p-2 w-fit flex justify-center items-center gap-2'>
-      <AiOutlineClockCircle size={30}/>
-      <span>{`${duration} мс`}</span>
-    </div>
-  )
 }
 
 export default ResultScreen;
