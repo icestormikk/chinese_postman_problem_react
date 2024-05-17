@@ -2,7 +2,6 @@ import React from 'react'
 import BottomBar from './components/bottombar/BottomBar'
 import Graph from './components/Graph'
 import Sidebar from './components/sidebar/Sidebar'
-import { useAppSelector } from './libs/redux/hooks'
 
 function App() {
   const isBottomBarVisible = React.useMemo(
