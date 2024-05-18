@@ -19,7 +19,6 @@ function LaunchGenetic() {
   const { executableFilePath, logFilePath, resultsFilePath } = useAppSelector((state) => state.main)
   const { nodes, edges } = useAppSelector((state) => state.graph)
   const [isWorking, setIsWorking] = React.useState(false)
-  const [errors, setErrors] = React.useState<string[]>([])
 
   const onGeneticAlgorithmLaunch = React.useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
