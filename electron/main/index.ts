@@ -7,6 +7,7 @@ import { readFileSync, existsSync, writeFileSync } from 'fs'
 import { execSync } from 'child_process'
 import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
 import { Graph } from '@/types/graph/Graph'
+import { AntColonyProps } from '@/types/alogrithms/AntColonyProps'
 
 globalThis.__filename = fileURLToPath(import.meta.url)
 globalThis.__dirname = path.dirname(__filename)
@@ -158,6 +159,24 @@ ipcMain.handle('launchGeneticAlgorithm', async (
 
   execSync(
     `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`, 
+  )
+})
+ipcMain.handle('launchAntColony', (
+  _: any,
+  logFilePath: string,
+  jarFilePath: string, 
+  resultsFilePath: string,
+  configuration: AntColonyProps,
+  graph: Graph<number>
+) => {
+  const graphOutputFilepath = getGraphOutputFilepath()
+  writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
+
+  const configurationFilepath = getConfigurationOutputFilepath()
+  writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
+
+  execSync(
+    `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`
   )
 })
 

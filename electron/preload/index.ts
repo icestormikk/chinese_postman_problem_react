@@ -1,3 +1,4 @@
+import { AntColonyProps } from '@/types/alogrithms/AntColonyProps'
 import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
 import { Graph } from '@/types/graph/Graph'
 import { ipcRenderer, contextBridge } from 'electron'
@@ -42,6 +43,15 @@ contextBridge.exposeInMainWorld('electron', {
     graph: Graph<number>
   ) => {
     return await ipcRenderer.invoke('launchGeneticAlgorithm', logFilePath, jarFilePath, resultsFilePath, configuration, graph)
+  },
+  launchAntColony: async (
+    logFilePath: string, 
+    jarFilePath: string, 
+    resultsFilePath: string,
+    configuration: AntColonyProps, 
+    graph: Graph<number>
+  ) => {
+    return await ipcRenderer.invoke('launchAntColony', logFilePath, jarFilePath, resultsFilePath, configuration, graph)
   }
 })
 
