@@ -6,6 +6,7 @@ import AlgorithmParameter from './AlgorithmParameter';
 import LaunchGenetic from './LaunchGenetic';
 import SuccessMessage from '@/components/messages/SuccessMessage';
 import AlgorithmFailedBlock from './AlgorithmFailedBlock';
+import LaunchAntColony from './LaunchAntColony';
 
 
 function LaunchScreen() {
@@ -54,6 +55,9 @@ function LaunchScreen() {
             </AlgorithmParameter>
             {
               selectedType === AlgorithmTypes.GENETIC && <LaunchGenetic/>
+            }
+            {
+              selectedType === AlgorithmTypes.ANT_COLONY && <LaunchAntColony/>
             }
             {
               response?.code === "SUCCESS" && <SuccessMessage message={response.data.message}/>
