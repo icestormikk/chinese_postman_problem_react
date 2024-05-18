@@ -22,8 +22,8 @@ contextBridge.exposeInMainWorld('ipcRenderer', {
 })
 
 contextBridge.exposeInMainWorld('electron', {
-  getAppDirectory: () => {
-    return ipcRenderer.invoke('getAppDirectory')
+  getHomeDirectory: () => {
+    return ipcRenderer.invoke('getHomeDirectory')
   },
   readFile: async (filepath: string) => {
     return ipcRenderer.invoke('readFile', filepath)

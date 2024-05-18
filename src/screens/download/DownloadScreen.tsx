@@ -19,7 +19,7 @@ function DownloadScreen() {
 
       try {
         const data = JSON.stringify({ nodes, edges }, null, 2)
-        const dir = await window.electron.getAppDirectory()
+        const dir = await window.electron.getHomeDirectory()
         const filename = 'graph-downloaded-data.json'
         const fullpath = `${dir}\\${filename}`
 
@@ -37,7 +37,7 @@ function DownloadScreen() {
   React.useEffect(
     () => {
       const getData = async () => {
-        const path = await window.electron.getAppDirectory()
+        const path = await window.electron.getHomeDirectory()
         setAppPath(path)
       }
 
@@ -48,7 +48,7 @@ function DownloadScreen() {
 
   return (
     <div className='block space-y-2'>
-      <p>{`Здесь вы можете выгрузить информацию о текущем графе в отдельный JSON-файл. Файл будет создан в той же директории, что и приложение (${appPath})`}</p>
+      <p>{`Здесь вы можете выгрузить информацию о текущем графе в отдельный JSON-файл. Файл будет в домашней директории (${appPath})`}</p>
       <form onSubmit={(event) => onDownload(event)} className='flex flex-col justify-start items-start'>
         <button className='bg-green-500 text-white'>Выгрузить</button>
         {

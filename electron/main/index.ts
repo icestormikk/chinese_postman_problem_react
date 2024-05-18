@@ -107,8 +107,8 @@ ipcMain.handle('open-win', (_, arg) => {
 })
 
 
-ipcMain.handle('getAppDirectory', (_: any) => {
-  return app.getAppPath()
+ipcMain.handle('getHomeDirectory', (_: any) => {
+  return app.getPath('home')
 })
 ipcMain.handle('readFile', async (_: any, filepath: string): Promise<string> => {
   if (!filepath) {
