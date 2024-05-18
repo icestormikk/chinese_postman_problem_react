@@ -2,7 +2,7 @@
  * @see https://www.electron.build/configuration/configuration
  */
 {
-  "appId": "ChinesesPostmanProblemGUI",
+  "appId": "chinese_postman_problem_gui",
   "asar": true,
   "directories": {
     "output": "release/${version}"

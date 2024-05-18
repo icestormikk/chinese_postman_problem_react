@@ -1,6 +1,6 @@
 {
-  "name": "electron-vite-react",
-  "version": "0.9.2",
+  "name": "chinese_postman_problem_gui",
+  "version": "0.9.3",
   "main": "dist-electron/main/index.js",
   "description": "An assistant program that visualizes the graph structure and helps to find a solution to the problem of the Chinese postman. Provides a user-friendly interface for configuring algorithms.",
   "author": "icestormikk",
