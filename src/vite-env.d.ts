@@ -2,6 +2,7 @@
 
 import { AntColonyProps } from "./types/alogrithms/AntColonyProps";
 import { GeneticAlgorithmProps } from "./types/alogrithms/GeneticAlgorithmProps";
+import { SimulatedAnnealingProps } from "./types/alogrithms/SimulatedAnnealingProps";
 import { Graph } from "./types/graph/Graph";
 
 export interface IElectronAPI {
@@ -28,6 +29,14 @@ export interface IElectronAPI {
     execFilePath: string,
     resultsFilePath: string,
     configuration: AntColonyProps, 
+    graph: Graph<number>
+  ) => Promise<void>
+
+  launchSimulatedAnnealing: (
+    logFilePath: string, 
+    execFilePath: string,
+    resultsFilePath: string,
+    configuration: SimulatedAnnealingProps, 
     graph: Graph<number>
   ) => Promise<void>
 }

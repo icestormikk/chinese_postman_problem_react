@@ -1,5 +1,6 @@
 import { AntColonyProps } from '@/types/alogrithms/AntColonyProps'
 import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
+import { SimulatedAnnealingProps } from '@/types/alogrithms/SimulatedAnnealingProps'
 import { Graph } from '@/types/graph/Graph'
 import { ipcRenderer, contextBridge } from 'electron'
 
@@ -52,6 +53,15 @@ contextBridge.exposeInMainWorld('electron', {
     graph: Graph<number>
   ) => {
     return await ipcRenderer.invoke('launchAntColony', logFilePath, jarFilePath, resultsFilePath, configuration, graph)
+  },
+  launchSimulatedAnnealing: async (
+    logFilePath: string, 
+    jarFilePath: string, 
+    resultsFilePath: string,
+    configuration: SimulatedAnnealingProps, 
+    graph: Graph<number>
+  ) => {
+    return await ipcRenderer.invoke('launchSimulatedAnnealing', logFilePath, jarFilePath, resultsFilePath, configuration, graph)
   }
 })
 
