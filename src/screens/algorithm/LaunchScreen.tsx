@@ -7,6 +7,7 @@ import LaunchGenetic from './LaunchGenetic';
 import SuccessMessage from '@/components/messages/SuccessMessage';
 import AlgorithmFailedBlock from './AlgorithmFailedBlock';
 import LaunchAntColony from './LaunchAntColony';
+import LaunchSimulatedAnnealing from './LaunchSimulatedAnnealing';
 
 
 function LaunchScreen() {
@@ -58,6 +59,9 @@ function LaunchScreen() {
             }
             {
               selectedType === AlgorithmTypes.ANT_COLONY && <LaunchAntColony/>
+            }
+            {
+              selectedType === AlgorithmTypes.ANNEALING && <LaunchSimulatedAnnealing/>
             }
             {
               response?.code === "SUCCESS" && <SuccessMessage message={response.data.message}/>
