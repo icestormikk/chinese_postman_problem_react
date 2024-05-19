@@ -9,6 +9,7 @@ import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
 import { Graph } from '@/types/graph/Graph'
 import { AntColonyProps } from '@/types/alogrithms/AntColonyProps'
 import { SimulatedAnnealingProps } from '@/types/alogrithms/SimulatedAnnealingProps'
+import { ParticleSwarmProps } from '@/types/alogrithms/ParticleSwarmProps'
 
 globalThis.__filename = fileURLToPath(import.meta.url)
 globalThis.__dirname = path.dirname(__filename)
@@ -156,6 +157,24 @@ ipcMain.handle('launchGeneticAlgorithm', async (
   writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
 
   const configurationFilepath = getConfigurationOutputFilepath("genetic")
+  writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
+
+  execSync(
+    `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`, 
+  )
+})
+ipcMain.handle('launchParticleSwarm', async (
+  _: any, 
+  logFilePath: string,
+  jarFilePath: string, 
+  resultsFilePath: string,
+  configuration: ParticleSwarmProps,
+  graph: Graph<number>
+) => {
+  const graphOutputFilepath = getGraphOutputFilepath("particle-swarm")
+  writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
+
+  const configurationFilepath = getConfigurationOutputFilepath("particle-swarm")
   writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
 
   execSync(
