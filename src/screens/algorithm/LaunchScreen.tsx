@@ -8,6 +8,7 @@ import SuccessMessage from '@/components/messages/SuccessMessage';
 import AlgorithmFailedBlock from './AlgorithmFailedBlock';
 import LaunchAntColony from './LaunchAntColony';
 import LaunchSimulatedAnnealing from './LaunchSimulatedAnnealing';
+import LaunchParticleSwarm from './LaunchParticleSwarm';
 
 
 function LaunchScreen() {
@@ -56,6 +57,9 @@ function LaunchScreen() {
             </AlgorithmParameter>
             {
               selectedType === AlgorithmTypes.GENETIC && <LaunchGenetic/>
+            }
+            {
+              selectedType === AlgorithmTypes.PARTICLES_SWARM && <LaunchParticleSwarm/>
             }
             {
               selectedType === AlgorithmTypes.ANT_COLONY && <LaunchAntColony/>
