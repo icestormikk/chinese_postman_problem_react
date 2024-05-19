@@ -2,6 +2,7 @@ import { useAppSelector } from '@/libs/redux/hooks';
 import React from 'react';
 import { ForceGraph3D } from 'react-force-graph';
 import SpriteText from 'three-spritetext';
+import { EdgeType } from '@/types/graph/EdgeType';
 
 function Graph() {
   const { edges, nodes } = useAppSelector((state) => state.graph)
@@ -26,20 +27,27 @@ function Graph() {
 
   React.useEffect(
     () => {
-      const transformedEdges = []
-      for (const node of nodes) {
-        const neighbours = edges.filter((edge) => edge.source.id === node.id)
-        for (let i = 0; i < neighbours.length; i++) {
-          transformedEdges.push({
-            source: neighbours[i].source.id, 
-            target: neighbours[i].destination.id, 
-            curvature: i * 0.3, 
-            rotation: 0
+      const result = []
+      for (let i = 0; i < edges.length; i++) {
+        const edge = edges[i]
+        result.push({
+          source: edge.source.id,
+          target: edge.destination.id,
+          curvature: i * 0.3,
+          rotation: 0,
+        })
+        if (edge.type == EdgeType.NOT_ORIENTED) {
+          result.push({
+            source: edge.destination.id,
+            target: edge.source.id,
+            curvature: i * -0.3,
+            rotation: 0,
           })
         }
       }
+
       setGraphNodes(nodes.map((n) => ({id: n.id, label: n.label})))
-      setGraphEdges(transformedEdges)
+      setGraphEdges(result)
     },
     [nodes, edges]
   )
