@@ -8,6 +8,7 @@ import { execSync } from 'child_process'
 import { GeneticAlgorithmProps } from '@/types/alogrithms/GeneticAlgorithmProps'
 import { Graph } from '@/types/graph/Graph'
 import { AntColonyProps } from '@/types/alogrithms/AntColonyProps'
+import { SimulatedAnnealingProps } from '@/types/alogrithms/SimulatedAnnealingProps'
 
 globalThis.__filename = fileURLToPath(import.meta.url)
 globalThis.__dirname = path.dirname(__filename)
@@ -151,10 +152,10 @@ ipcMain.handle('launchGeneticAlgorithm', async (
   configuration: GeneticAlgorithmProps,
   graph: Graph<number>
 ) => {
-  const graphOutputFilepath = getGraphOutputFilepath()
+  const graphOutputFilepath = getGraphOutputFilepath("genetic")
   writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
 
-  const configurationFilepath = getConfigurationOutputFilepath()
+  const configurationFilepath = getConfigurationOutputFilepath("genetic")
   writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
 
   execSync(
@@ -169,10 +170,28 @@ ipcMain.handle('launchAntColony', (
   configuration: AntColonyProps,
   graph: Graph<number>
 ) => {
-  const graphOutputFilepath = getGraphOutputFilepath()
+  const graphOutputFilepath = getGraphOutputFilepath("ant-colony")
   writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
 
-  const configurationFilepath = getConfigurationOutputFilepath()
+  const configurationFilepath = getConfigurationOutputFilepath("ant-colony")
+  writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
+
+  execSync(
+    `java -Dlogfile-path=${logFilePath} -jar ${jarFilePath} --graph ${graphOutputFilepath} --config ${configurationFilepath} --output ${resultsFilePath}`
+  )
+})
+ipcMain.handle('launchSimulatedAnnealing', (
+  _: any,
+  logFilePath: string,
+  jarFilePath: string, 
+  resultsFilePath: string,
+  configuration: SimulatedAnnealingProps,
+  graph: Graph<number>
+) => {
+  const graphOutputFilepath = getGraphOutputFilepath("annealing")
+  writeFileSync(graphOutputFilepath, JSON.stringify(graph, null, 2), { flag: 'w+' })
+
+  const configurationFilepath = getConfigurationOutputFilepath("annealing")
   writeFileSync(configurationFilepath, JSON.stringify(configuration, null, 2), { flag: 'w+' })
 
   execSync(
@@ -180,12 +199,12 @@ ipcMain.handle('launchAntColony', (
   )
 })
 
-function getGraphOutputFilepath(): string {
-  const filename = `data.json`
+function getGraphOutputFilepath(prefix: string = "algorithm"): string {
+  const filename = `${prefix}data.json`
   return path.join(os.homedir(), filename)
 }
 
-function getConfigurationOutputFilepath(): string {
-  const filename = `config.json`
+function getConfigurationOutputFilepath(prefix: string = "algorithm"): string {
+  const filename = `${prefix}-config.json`
   return path.join(os.homedir(), filename)
 }
