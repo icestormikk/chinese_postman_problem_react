@@ -4,12 +4,14 @@ import ErrorMessage from '@/components/messages/ErrorMessage';
 import { useAppDispatch, useAppSelector } from '@/libs/redux/hooks';
 import { setEdges } from '@/libs/redux/slices/graphSlice';
 import { Edge } from '@/types/graph/Edge';
+import { EdgeType, getTranslatedEdgeType } from '@/types/graph/EdgeType';
 import React from 'react';
 import { v4 } from 'uuid';
 
 type AddEdgeFormProps = {
   sourceNode: {value: string },
   destinationNode: { value: string },
+  edgeType: { value: string },
   edgeWeight: { value: number }
 }
 
@@ -27,6 +29,7 @@ function AddEdgeScreen() {
       const data = {
         source: target.sourceNode.value,
         destination: target.destinationNode.value,
+        type: target.edgeType.value,
         weight: Number(target.edgeWeight.value)
       }
 
@@ -46,7 +49,8 @@ function AddEdgeScreen() {
         return
       }
 
-      const edge = new Edge(sourceNode!, destinationNode!, data.weight, v4())
+      const edge = new Edge(sourceNode!, destinationNode!, data.weight, EdgeType[data.type as keyof typeof EdgeType], v4())
+      console.log(edge)
       dispatch(setEdges([...edges, edge]))
     },
     [nodes, edges, errors]
@@ -64,6 +68,12 @@ function AddEdgeScreen() {
         <CustomSelect 
           id={'destinationNode'} 
           options={nodes.map((node) => ({ value: node.id, label: node.label }))}
+        />
+      </CustomFormField>
+      <CustomFormField id={'edgeType'} title={'Тип ребра'}>
+        <CustomSelect 
+          id={'edgeType'} 
+          options={Object.entries(EdgeType).map(([key, value]) => ({ value: key, label: getTranslatedEdgeType(value) }))}
         />
       </CustomFormField>
       <CustomFormField id={'edgeWeight'} title={'Вес ребра'}>

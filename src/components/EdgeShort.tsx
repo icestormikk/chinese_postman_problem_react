@@ -23,6 +23,7 @@ const EdgeShort = ({ edge }: EdgeShortProps) => {
       <div className='flex flex-col gap-2'>
         <span><b>{edge.source.label}</b> - <b>{edge.destination.label}</b></span>
         <span className='text-sm'>Вес ребра: <b>{edge.weight}</b></span>
+        <span className='text-sm'>Тип ребра: <b>{getTranslatedEdgeType(edge.type)}</b></span>
         <span className='text-xs text-gray-400'>{edge.id}</span>
       </div>
       <button className='bg-transparent' onClick={() => onEdgeRemove()}>
