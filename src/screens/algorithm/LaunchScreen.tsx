@@ -7,8 +7,6 @@ import LaunchGenetic from './LaunchGenetic';
 import SuccessMessage from '@/components/messages/SuccessMessage';
 import AlgorithmFailedBlock from './AlgorithmFailedBlock';
 import LaunchAntColony from './LaunchAntColony';
-import LaunchSimulatedAnnealing from './LaunchSimulatedAnnealing';
-import LaunchParticleSwarm from './LaunchParticleSwarm';
 
 
 function LaunchScreen() {
@@ -48,24 +46,15 @@ function LaunchScreen() {
             <AlgorithmParameter title='Выберите тип алгоритма, по которому будет вычислено приблизительное решение:'>
               <select name="algorithm-type" id="algorithm-type" onChange={(event) => setSelectedType(AlgorithmTypes[event.target.value as keyof typeof AlgorithmTypes])}>
                 <option value="">Не выбрано</option>
-                {
-                  Object.entries(AlgorithmTypes).map(([key, value], index) => (
-                    <option key={index} value={key}>{getTranslatedType(value)}</option>
-                  ))
-                }
+                <option value={AlgorithmTypes.GENETIC}>{getTranslatedType(AlgorithmTypes.GENETIC)}</option>
+                <option value={AlgorithmTypes.ANT_COLONY}>{getTranslatedType(AlgorithmTypes.ANT_COLONY)}</option>
               </select>
             </AlgorithmParameter>
             {
               selectedType === AlgorithmTypes.GENETIC && <LaunchGenetic/>
             }
             {
-              selectedType === AlgorithmTypes.PARTICLES_SWARM && <LaunchParticleSwarm/>
-            }
-            {
               selectedType === AlgorithmTypes.ANT_COLONY && <LaunchAntColony/>
-            }
-            {
-              selectedType === AlgorithmTypes.ANNEALING && <LaunchSimulatedAnnealing/>
             }
             {
               response?.code === "SUCCESS" && <SuccessMessage message={response.data.message}/>
