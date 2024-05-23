@@ -17,7 +17,7 @@
     text-decoration: inherit;
   }
   body {
-    @apply min-w-[320px] min-h-screen m-0;
+    @apply min-w-[320px] min-h-screen m-0 overflow-hidden;
   }
   h1 {
     @apply text-[3.2em] leading-[1.1];
@@ -54,7 +54,7 @@
   }
   .modal {
     @apply relative w-full max-w-[70dvw] min-w-[20dvw] shadow-[0_0_0.5rem_0.25rem_hsl(0_0%_0%_/_10%)] p-8 rounded-lg border-0 bg-white
-    text-black space-y-4;
+    text-black space-y-4 overflow-x-hidden;
   }
   .modal::backdrop {
     background: rgba(0, 0, 0, 0.5);
