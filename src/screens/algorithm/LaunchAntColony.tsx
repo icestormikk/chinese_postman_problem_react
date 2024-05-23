@@ -75,7 +75,7 @@ function LaunchAntColony() {
   )
 
   return (
-    <form onSubmit={onAntColonyLaunch} className='flex flex-col gap-2 p-2 rounded-md shadow-md border border-solid border-gray-200'>
+    <form onSubmit={(e) => onAntColonyLaunch(e)} className='flex flex-col gap-2 p-2 rounded-md shadow-md border border-solid border-gray-200'>
       <CustomFormField id={'startNodeId'} title='Начальная вершина' commentary='Вершина, относительно которой алгоритм начнёт работу'>
         <CustomSelect 
           id={'startNodeId'} 
@@ -92,7 +92,7 @@ function LaunchAntColony() {
         <input type="number" name="startPheromoneValue" id="startPheromoneValue" defaultValue={2} min={0} step={0.01} required/>
       </CustomFormField>
       <CustomFormField id='proximityCoefficient' title={'Коэффициент близости'} commentary='Константа, помогающая муравьям понять, насколько близка та или иная вершина'>
-        <input type="number" name="proximityCoefficient" id="proximityCoefficient" defaultValue={0} min={0} step={0.01} required/>
+        <input type="number" name="proximityCoefficient" id="proximityCoefficient" defaultValue={0.4} min={0.01} step={0.01} required/>
       </CustomFormField>
       <CustomFormField id='alpha' title={'Коэффициент alpha'} commentary='Коэффициент, показывающий насколько сильно муравьи при переходе будут обращать внимание на кол-во феромона'>
         <input type="number" name="alpha" id="alpha" defaultValue={0.5} min={0} max={1} step={0.01} required/>
