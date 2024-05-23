@@ -3,6 +3,7 @@ import { SidebarButtonProps } from "@/types/SidebarButtonProps";
 import SidebarButton from "./SidebarButton";
 import { FaCircleNodes } from "react-icons/fa6";
 import { SlGraph, SlSettings } from "react-icons/sl";
+import { PiGraph } from "react-icons/pi";
 import { MdOutlineFileDownload, MdOutlineFileUpload } from "react-icons/md";
 import { VscDebugStart } from "react-icons/vsc";
 import { TbReport } from "react-icons/tb";
@@ -15,10 +16,12 @@ import LaunchScreen from "@/screens/algorithm/LaunchScreen";
 import { useAppSelector } from "@/libs/redux/hooks";
 import DownloadScreen from "@/screens/download/DownloadScreen";
 import ResultScreen from "@/screens/result/ResultScreen";
+import BuildRandomGraphScreen from "@/screens/graph/BuildRandomGraphScreen";
 
 
 function Sidebar() {
   const { response } = useAppSelector((state) => state.main)
+  const [isBuildRandomGrapModalOpen, setIsBuildRandomGrapModalOpen] = React.useState(false)
   const [isSettingsModalOpen, setIsSettingsModalOpen] = React.useState(false)
   const [isUploadModalOpen, setIsUploadModalOpen] = React.useState(false)
   const [isDownloadModalOpen, setIsDownloadModalOpen] = React.useState(false)
@@ -29,6 +32,7 @@ function Sidebar() {
   const buttons = React.useMemo<SidebarButtonProps[]>(
     () => {
       return [
+        {title: 'Создать случайный граф', icon: <PiGraph size={20}/>, onClick: () => { setIsBuildRandomGrapModalOpen(true) }},
         {title: 'Список вершин', icon: <FaCircleNodes size={20}/>, onClick: () => { setIsNodesModalOpen(true) }},
         {title: 'Список рёбер', icon: <SlGraph size={20}/>, onClick: () => { setIsEdgesModalOpen(true) }},
         {title: 'Конфигурация приложения', icon: <SlSettings size={20}/>, onClick: () => { setIsSettingsModalOpen(true) }},
@@ -49,6 +53,18 @@ function Sidebar() {
              {button.icon}
           </SidebarButton>
         ))
+      }
+      {
+        isBuildRandomGrapModalOpen && (
+          <Modal 
+            isOpen={isBuildRandomGrapModalOpen} 
+            title="Создать случайный граф" 
+            hasCloseBtn={true} 
+            onClose={() => setIsBuildRandomGrapModalOpen(false)}
+          >
+            <BuildRandomGraphScreen/>
+          </Modal>
+        )
       }
       {
         isSettingsModalOpen && (
