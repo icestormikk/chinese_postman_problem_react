@@ -9,7 +9,10 @@ export type GeneticAlgorithmProps = AlgorithmProps & {
       selection: string
       chooser: string
     }
-    recombinationType: string
+    recombination: {
+      type: string,
+      rate: number
+    }
     mutation: {
       type: string
       rate: number
@@ -28,6 +31,7 @@ export type GeneticAlgorithmFormProps = {
   parentsSelectionMethod: { value: string },
   parentsChooserMethod: { value: string },
   recombinationType: { value: string },
+  recombinationRate: { value: number },
   mutationType: { value: string },
   mutationRate: { value: number },
   newPopulationSelectionMethod: { value: string },

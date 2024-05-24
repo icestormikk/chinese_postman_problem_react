@@ -39,7 +39,10 @@ function LaunchGenetic() {
             selection: target.parentsSelectionMethod.value,
             chooser: target.parentsChooserMethod.value
           },
-          recombinationType: target.recombinationType.value,
+          recombination: {
+            type: target.recombinationType.value,
+            rate: Number(target.recombinationRate.value)
+          },
           mutation: {
             type: target.mutationType.value,
             rate: Number(target.mutationRate.value)
@@ -136,6 +139,9 @@ function LaunchGenetic() {
             Object.entries(RecombinationTypes).map(([key, value]) => ({ value: key, label: getTranslatedRecombinationType(value)}))
           } 
         />
+      </CustomFormField>
+      <CustomFormField id='recombinationRate' title={'Вероятность проведения рекомбинации'}>
+        <input type="number" name="recombinationRate" id="recombinationRate" defaultValue={1} min={0} max={1} step={0.001} required/>
       </CustomFormField>
       <CustomFormField 
         id={'mutationType'} 
