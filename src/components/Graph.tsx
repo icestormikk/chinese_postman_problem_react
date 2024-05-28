@@ -8,7 +8,6 @@ import { Edge } from '@/types/graph/Edge';
 import SpriteText from 'three-spritetext';
 
 function Graph() {
-  const NODE_SIZE = 3
   const { edges, nodes } = useAppSelector((state) => state.graph)
   const [graphNodes, setGraphNodes] = React.useState<any[]>([])
   const [graphEdges, setGraphEdges] = React.useState<any[]>([])
