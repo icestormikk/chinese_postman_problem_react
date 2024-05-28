@@ -44,27 +44,32 @@ function BuildRandomGraphScreen() {
         result.nodes.push(new Node(`Node-${i}`, v4()))
       }
 
-      for (let i = 0; i < result.nodes.length; i++) {
-        for (let j = 0; j < result.nodes.length; j++) {
-          if (i === j || Math.random() > data.connectNodeChance) continue
+      // Создание списка рёбер
+      for (let i = 0; i < data.nodesCount; i++) {
+        for (let j = i; j < data.nodesCount; j++) {
+          if (Math.random() >= data.connectNodeChance) continue
 
-          const nodeFrom = result.nodes[i]
-          const nodeTo = result.nodes[j]
+          let source = result.nodes[i]
+          let destination = result.nodes[j]
 
-          const isAlreadyExist = result.edges.find((edge) => 
-            (edge.type === EdgeType.NOT_ORIENTED && [edge.source, edge.destination].includes(nodeFrom) && [edge.source, edge.destination].includes(nodeTo)) ||
-            (edge.type === EdgeType.DIRECTED && (edge.source.id == nodeFrom.id && edge.destination.id == nodeTo.id))
-          )
-
-          if (isAlreadyExist) continue
-
+          const edge = result.edges.filter((e) => {
+            if (e.type == EdgeType.DIRECTED) {
+              return false
+            }
+  
+            const arr = [e.source, e.destination]
+            if (arr.includes(e.source) && arr.includes(e.destination)) {
+              return false
+            }
+  
+            return true
+          })
+          if (edge.length > 0) continue
+  
+          const weight = Math.floor(Math.random() * (data.maxWeight - data.minWeight + 1)) + data.minWeight;
           result.edges.push(
             new Edge(
-              nodeFrom,
-              nodeTo,
-              Math.random() * (data.maxWeight - data.minWeight) + data.minWeight, 
-              Math.random() < data.orientedChance ? EdgeType.DIRECTED : EdgeType.NOT_ORIENTED,
-              v4()
+              source, destination, weight, Math.random() < 0.5 ? EdgeType.DIRECTED : EdgeType.NOT_ORIENTED, v4()
             )
           )
         }
