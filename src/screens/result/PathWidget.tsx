@@ -10,16 +10,17 @@ interface PathWidgetProps {
 const PathWidget = ({ path }: PathWidgetProps) => {
   const { edges } = useAppSelector((state) => state.graph)
   const [pathString, setPathString] = React.useState<string>()
+  const [missedEdges, setMissedEdges] = React.useState<Edge<number>[]>([])
 
   const isAllEdgesVisited = React.useCallback(
     () => {
       for (const edge of edges) {
         if (path.find((e) => e.id === edge.id) == undefined) {
-          return false
+          setMissedEdges((prevState) => [...(prevState || []), edge])
         }
       }
 
-      return true
+      return missedEdges.length === 0
     },
     [edges, path]
   )
@@ -51,6 +52,13 @@ const PathWidget = ({ path }: PathWidgetProps) => {
       { pathString && <b>{pathString}</b> }
       <b>{`Общая длина пути: ${path.map((edge) => edge.weight).reduce((a, b) => a + b, 0)}`}</b>
       <b>{`Все рёбра посещены? - ${isAllEdgesVisited() ? 'Да' : 'Нет'}`}</b>
+      {
+        missedEdges.length > 0 && (
+          missedEdges.map((edge, index) => (
+            <PathEdge key={index} index={index + 1} edge={edge}/>
+          ))
+        )
+      }
     </div>
   );
 };
