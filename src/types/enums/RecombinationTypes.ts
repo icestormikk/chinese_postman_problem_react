@@ -2,7 +2,8 @@ export enum RecombinationTypes {
   DISCRETE = 'DISCRETE',
   SINGLE_POINT_CROSSOVER = 'SINGLE_POINT_CROSSOVER',
   TWO_POINT_CROSSOVER = 'TWO_POINT_CROSSOVER',
-  SHUFFLE = 'SHUFFLE'
+  SHUFFLE = 'SHUFFLE',
+  CHROMOSOME_CROSSOVER = 'CHROMOSOME_CROSSOVER'
 }
 
 export function getTranslatedRecombinationType(type: RecombinationTypes) {
@@ -18,6 +19,9 @@ export function getTranslatedRecombinationType(type: RecombinationTypes) {
     }
     case RecombinationTypes.SHUFFLE: {
       return 'Перетасовочный кроссинговер'
+    }
+    case RecombinationTypes.CHROMOSOME_CROSSOVER: {
+      return 'Хромосомный кроссовер'
     }
   }
 }

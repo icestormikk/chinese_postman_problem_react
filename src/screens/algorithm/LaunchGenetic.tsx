@@ -31,6 +31,7 @@ function LaunchGenetic() {
 
       const data: GeneticAlgorithmProps = {
         type: AlgorithmTypes.GENETIC,
+        maxLength: Number(target.maxLength.value),
         genetic: {
           iterationsCount: Number(target.iterationsCount.value),
           populationSize: Number(target.populationSize.value),
@@ -92,6 +93,9 @@ function LaunchGenetic() {
 
   return (
     <form onSubmit={onGeneticAlgorithmLaunch} className='flex flex-col gap-2 p-2 rounded-md shadow-md border border-solid border-gray-200'>
+      <CustomFormField id='maxLength' title={'Максимальная длина пути'}>
+        <input type="number" name="maxLength" id="maxLength" defaultValue={1} min={1} required/>
+      </CustomFormField>
       <CustomFormField id='iterationsCount' title={'Количество итераций алгоритма'}>
         <input type="number" name="iterationsCount" id="iterationsCount" defaultValue={1} min={1} required/>
       </CustomFormField>

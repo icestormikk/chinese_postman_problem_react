@@ -32,7 +32,7 @@ function BuildRandomGraphScreen() {
         maxWeight: Number(target.maxWeight.value)
       }
 
-      if (data.nodesCount <= 0 || data.connectNodeChance <= 0 || data.orientedChance <= 0) {
+      if (data.nodesCount <= 0 || data.connectNodeChance <= 0 || data.orientedChance < 0) {
         setErrors((prevState) => [...prevState, "Все значения должны быть строго положительными"])
         return
       }
@@ -69,7 +69,7 @@ function BuildRandomGraphScreen() {
           const weight = Math.floor(Math.random() * (data.maxWeight - data.minWeight + 1)) + data.minWeight;
           result.edges.push(
             new Edge(
-              source, destination, weight, Math.random() < 0.5 ? EdgeType.DIRECTED : EdgeType.NOT_ORIENTED, v4()
+              source, destination, weight, Math.random() < data.orientedChance ? EdgeType.DIRECTED : EdgeType.NOT_ORIENTED, v4()
             )
           )
         }

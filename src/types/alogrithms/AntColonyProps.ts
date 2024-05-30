@@ -15,6 +15,7 @@ export type AntColonyProps = AlgorithmProps & {
 }
 
 export type AntColonyFormProps = {
+  maxLength: { value: number },
   startNodeId: { value: string },
   iterationCount: { value: number },
   antCount: { value: number },

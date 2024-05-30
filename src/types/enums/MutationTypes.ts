@@ -1,6 +1,7 @@
 export enum MutationTypes {
   REPLACING = 'REPLACING',
-  SWAPPING = 'SWAPPING'
+  SWAPPING = 'SWAPPING',
+  EDGE_REPLACING = 'EDGE_REPLACING'
 }
 
 export function getTranslatedMutationType(type: MutationTypes) {
@@ -10,6 +11,9 @@ export function getTranslatedMutationType(type: MutationTypes) {
     }
     case MutationTypes.SWAPPING: {
       return 'Перестановочная мутация'
+    }
+    case MutationTypes.EDGE_REPLACING: {
+      return 'Замена одного ребра'
     }
   }
 }

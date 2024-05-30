@@ -25,6 +25,7 @@ export type GeneticAlgorithmProps = AlgorithmProps & {
 }
 
 export type GeneticAlgorithmFormProps = {
+  maxLength: { value: number },
   iterationsCount: { value: number },
   populationSize: { value: number },
   startNodeId: { value: string },

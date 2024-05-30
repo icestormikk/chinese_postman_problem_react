@@ -219,7 +219,7 @@ ipcMain.handle('launchSimulatedAnnealing', (
 })
 
 function getGraphOutputFilepath(prefix: string = "algorithm"): string {
-  const filename = `${prefix}data.json`
+  const filename = `${prefix}-data.json`
   return path.join(os.homedir(), filename)
 }
 

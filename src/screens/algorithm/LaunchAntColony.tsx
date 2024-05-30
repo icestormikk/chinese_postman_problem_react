@@ -25,6 +25,7 @@ function LaunchAntColony() {
       const target = e.target as typeof e.target & AntColonyFormProps
       const data: AntColonyProps = {
         type: AlgorithmTypes.ANT_COLONY,
+        maxLength: Number(target.maxLength.value),
         antColony: {
           startNodeId: target.startNodeId.value,
           iterationCount: Number(target.iterationCount.value),
@@ -76,6 +77,9 @@ function LaunchAntColony() {
 
   return (
     <form onSubmit={(e) => onAntColonyLaunch(e)} className='flex flex-col gap-2 p-2 rounded-md shadow-md border border-solid border-gray-200'>
+      <CustomFormField id='maxLength' title={'Максимальная длина искомого пути'}>
+        <input type="number" name="maxLength" id="maxLength" defaultValue={1} min={1} required/>
+      </CustomFormField>
       <CustomFormField id={'startNodeId'} title='Начальная вершина' commentary='Вершина, относительно которой алгоритм начнёт работу'>
         <CustomSelect 
           id={'startNodeId'} 
