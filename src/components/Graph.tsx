@@ -108,6 +108,7 @@ function Graph() {
         linkColor={(link) => link.type == EdgeType.DIRECTED ? 'green' : 'red'}
         linkDirectionalArrowLength={(link) => link.type == EdgeType.DIRECTED ? 1.5 : 0}
         linkDirectionalArrowRelPos={1}
+        cooldownTicks={0}
         nodeCanvasObject={(node, ctx, globalScale) => {
           const label = node.label;
           const fontSize = 24/globalScale;
