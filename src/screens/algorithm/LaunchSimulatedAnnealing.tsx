@@ -26,6 +26,8 @@ function LaunchSimulatedAnnealing() {
       const target = e.target as typeof e.target & SimulatedAnnealingFormProps
       const data: SimulatedAnnealingProps = {
         type: AlgorithmTypes.ANNEALING,
+        maxLength: 0,
+        startNodeId: "",
         annealing: {
           minTemperature: Number(target.minTemperature.value),
           maxTemperature: Number(target.maxTemperature.value),

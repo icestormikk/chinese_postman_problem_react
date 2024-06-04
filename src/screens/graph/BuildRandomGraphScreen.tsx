@@ -3,6 +3,7 @@ import ErrorMessage from '@/components/messages/ErrorMessage';
 import SuccessMessage from '@/components/messages/SuccessMessage';
 import { useAppDispatch } from '@/libs/redux/hooks';
 import { setEdges, setNodes } from '@/libs/redux/slices/graphSlice';
+import { setResponse } from '@/libs/redux/slices/mainSlice';
 import { BuildGraphFormProps, BuildGraphProps } from '@/types/BuildGraphProps';
 import { Edge } from '@/types/graph/Edge';
 import { EdgeType } from '@/types/graph/EdgeType';
@@ -22,6 +23,7 @@ function BuildRandomGraphScreen() {
       e.preventDefault()
       setErrors([])
       setSuccessMessage(undefined)
+      dispatch(setResponse(undefined))
 
       const target = e.target as typeof e.target & BuildGraphFormProps
       const data: BuildGraphProps = {
@@ -45,8 +47,8 @@ function BuildRandomGraphScreen() {
       }
 
       // Создание списка рёбер
-      for (let i = 0; i < data.nodesCount; i++) {
-        for (let j = i; j < data.nodesCount; j++) {
+      for (let i = 0; i < data.nodesCount - 1; i++) {
+        for (let j = i + 1; j < data.nodesCount; j++) {
           if (Math.random() >= data.connectNodeChance) continue
 
           let source = result.nodes[i]

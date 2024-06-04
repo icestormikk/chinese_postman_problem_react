@@ -26,6 +26,8 @@ function LaunchParticleSwarm() {
       const target = e.target as typeof e.target & ParticleSwarmFormProps
       const data: ParticleSwarmProps = {
         type: AlgorithmTypes.PARTICLES_SWARM,
+        maxLength: 0,
+        startNodeId: "",
         particleSwarm: {
           iterationsCount: Number(target.iterationsCount.value),
           swarmSize: Number(target.swarmSize.value),

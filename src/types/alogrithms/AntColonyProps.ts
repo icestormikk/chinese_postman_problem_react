@@ -2,7 +2,6 @@ import { AlgorithmProps } from "./AlgorithmProps";
 
 export type AntColonyProps = AlgorithmProps & {
   antColony: {
-    startNodeId: string,
     iterationCount: number,
     antCount: number,
     startPheromoneValue: number,

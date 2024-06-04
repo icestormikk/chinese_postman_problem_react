@@ -26,8 +26,8 @@ function LaunchAntColony() {
       const data: AntColonyProps = {
         type: AlgorithmTypes.ANT_COLONY,
         maxLength: Number(target.maxLength.value),
+        startNodeId: target.startNodeId.value,
         antColony: {
-          startNodeId: target.startNodeId.value,
           iterationCount: Number(target.iterationCount.value),
           antCount: Number(target.antCount.value),
           startPheromoneValue: Number(target.startPheromoneValue.value),

@@ -32,10 +32,10 @@ function LaunchGenetic() {
       const data: GeneticAlgorithmProps = {
         type: AlgorithmTypes.GENETIC,
         maxLength: Number(target.maxLength.value),
+        startNodeId: target.startNodeId.value,
         genetic: {
           iterationsCount: Number(target.iterationsCount.value),
           populationSize: Number(target.populationSize.value),
-          startNodeId: target.startNodeId.value,
           parents: {
             selection: target.parentsSelectionMethod.value,
             chooser: target.parentsChooserMethod.value

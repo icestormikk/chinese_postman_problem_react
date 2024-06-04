@@ -2,13 +2,15 @@ import { Edge } from "@/types/graph/Edge";
 import PathEdge from "./PathEdge";
 import { useAppSelector } from "@/libs/redux/hooks";
 import React from "react";
+import { Graph } from "@/types/graph/Graph";
 
 interface PathWidgetProps {
   path: Array<Edge<number>>
 }
 
 const PathWidget = ({ path }: PathWidgetProps) => {
-  const { edges } = useAppSelector((state) => state.graph)
+  const { nodes, edges } = useAppSelector((state) => state.graph)
+  const { response } = useAppSelector((state) => state.main)
   const [pathString, setPathString] = React.useState<string>()
   const [missedEdges, setMissedEdges] = React.useState<Edge<number>[]>([])
 
@@ -27,18 +29,20 @@ const PathWidget = ({ path }: PathWidgetProps) => {
 
   React.useEffect(
     () => {
-      let res = [path[0].source, path[0].destination]
-      for (let i = 1; i < path.length; i++) {
-        if (path[i].source.id === res.at(-1)!.id) {
-          res.push(path[i].destination)
-        } else {
-          res.push(path[i].source)
-        }
+      const graph = new Graph(nodes, edges)
+      const startNodeId = response?.start.configuration.startNodeId
+      if (!startNodeId) {
+        return
       }
 
-      setPathString(res.map((n) => n.label).join(' -> '))
+      const startNode = graph.nodes.find((n) => n.id == startNodeId)
+      if (!startNode) {
+        return
+      }
+
+      setPathString(graph.pathToNodeString(path, startNode))
     },
-    [path]
+    [path, nodes, edges]
   )
 
   return (

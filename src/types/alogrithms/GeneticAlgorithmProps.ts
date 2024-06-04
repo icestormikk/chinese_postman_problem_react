@@ -4,7 +4,6 @@ export type GeneticAlgorithmProps = AlgorithmProps & {
   genetic: {
     iterationsCount: number
     populationSize: number
-    startNodeId: string
     parents: {
       selection: string
       chooser: string
